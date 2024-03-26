@@ -49,7 +49,7 @@ function calculateNSSF(grossSalary) {
   return grossSalary * 0.06;
 }
 
-// Function to calculate net salary
+// Function to calculate net salary and all deductions
 function calculateNetSalary(grossSalary) {
   const paye = calculatePAYE(grossSalary);
   const nhif = calculateNHIF(grossSalary);
@@ -59,12 +59,25 @@ function calculateNetSalary(grossSalary) {
 
   const netSalary = grossSalary - deductions;
 
-  return netSalary;
+  return {
+    netSalary,
+    deductions: {
+      PAYE: paye,
+      NHIF: nhif,
+      NSSF: nssf
+    }
+  };
 }
 
 // Get valid numeric input for Gross Salary
 const grossSalary = getValidNumericInput("Please enter your Gross Salary: ");
 
-// displays net salary
-const netSalary = calculateNetSalary(grossSalary);
+// Calculate net salary and deductions
+const { netSalary, deductions } = calculateNetSalary(grossSalary);
+
+// Display net salary and deductions
 console.log("Your net salary is:", netSalary);
+console.log("Deductions:");
+console.log(" - PAYE:", deductions.PAYE);
+console.log(" - NHIF:", deductions.NHIF);
+console.log(" - NSSF:", deductions.NSSF);
